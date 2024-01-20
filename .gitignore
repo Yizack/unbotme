@@ -1,0 +1,4 @@
+.env
+node_modules
+ts-node
+src/assets
