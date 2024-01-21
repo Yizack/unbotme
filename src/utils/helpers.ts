@@ -8,7 +8,7 @@ dotenv.config();
 export const options = {
   identity: {
     username: "unbotme",
-    password: process.env.TWITCH_TOKEN
+    password: "oauth:" + process.env.TWITCH_TOKEN
   },
   channels: ["unbotme"]
 };
