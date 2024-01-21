@@ -20,4 +20,4 @@ class TwitchAPI {
   }
 }
 
-export default new TwitchAPI(process.env.CLIENT_ID);
+export default new TwitchAPI(process.env.TWITCH_CLIENT_ID);
