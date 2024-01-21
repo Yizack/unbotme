@@ -9,11 +9,10 @@
     "botslist": "npm run execute scripts/generateBotsList.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .ts,.js --fix --ignore-path .gitignore .",
-    "execute": "node --loader=./ts-node/loader.js --no-warnings=ExperimentalWarning --import=./ts-node/logError.js",
-    "worker:deploy": "cd worker && wrangler publish"
+    "execute": "node --loader=./ts-node/loader.js --no-warnings=ExperimentalWarning --import=./ts-node/logError.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yizack Rangel",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.11.5",
@@ -30,7 +29,6 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.3",
-    "wrangler": "^3.23.0",
     "ws": "^8.16.0"
   }
 }
