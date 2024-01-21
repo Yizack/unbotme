@@ -36,11 +36,13 @@ class CloudflareAPI {
   }
 
   async updateRefreshToken (id_user: number, refresh_token: string): Promise<void> {
-    await this.query("UPDATE users SET refresh_token = ? WHERE id_user = ?", [refresh_token, id_user]);
+    const today = Date.now();
+    await this.query("UPDATE users SET refresh_token = ? AND updated_at = ? WHERE id_user = ?", [refresh_token, today, id_user]);
   }
 
   async inactivateUser (id_user: number): Promise<void> {
-    await this.query("UPDATE users SET active = ? WHERE id_user = ?", [0, id_user]);
+    const today = Date.now();
+    await this.query("UPDATE users SET active = ? AND updated_at = ? WHERE id_user = ?", [0, today, id_user]);
   }
 }
 
