@@ -1,11 +1,13 @@
-import { options, onConnected, extractCommand } from "~/utils/helpers";
+import * as tmi from "tmi.js";
 import * as cron from "~/crons/banbots";
 import * as cmd from "~/commands";
-import * as tmi from "tmi.js";
+import { options, onConnected, extractCommand, joinChannels } from "~/utils/helpers";
+import CloudflareAPI from "~/utils/cloudflare";
+
+const broadcasters = [];
 
 const client = new tmi.client(options);
-
-cron.banBots(client);
+cron.banBots(client, broadcasters);
 
 client.on("message", async (target, context, message, self) => {
   if (self || !message.startsWith("!")) return;
@@ -21,6 +23,11 @@ client.on("message", async (target, context, message, self) => {
   }
 });
 
-client.on("connected", onConnected);
+client.on("connected", async (address: string, port: number) => {
+  onConnected(address, port);
+  const users = await CloudflareAPI.getActiveUsers();
+  broadcasters.push(...users);
+  await joinChannels(client, users);
+});
 
 client.connect();

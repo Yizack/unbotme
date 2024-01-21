@@ -1,6 +1,6 @@
 import { $fetch } from "ofetch";
 import { writeFileSync } from "fs";
-import type { twitchInsightsList } from "../types/scripts.d.ts";
+import type { twitchInsightsList } from "../src/types/scripts.js";
 
 const sources = {
   twitchInsights: {
