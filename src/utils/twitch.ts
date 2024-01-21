@@ -1,5 +1,5 @@
 import { $fetch } from "ofetch";
-import type { CloudflareUser } from "~/types/cloudflare";
+import type { D1User } from "~/types/cloudflare";
 
 class TwitchAPI {
   private client_id: string;
@@ -8,7 +8,7 @@ class TwitchAPI {
     this.client_id = client_id;
   }
 
-  async getChatters (user: CloudflareUser) {
+  async getChatters (user: D1User) {
     const req = await $fetch(`https://api.twitch.tv/helix/chat/chatters?broadcaster_id=${user.id_user}&moderator_id=${user.id_user}`, {
       headers: {
         "Authorization": `Bearer ${user.token}`,

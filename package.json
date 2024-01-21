@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon src/unbotme.ts",
+    "tunnel": "cloudflared tunnel run unbotme",
     "botslist": "npm run execute scripts/generateBotsList.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .ts,.js --fix --ignore-path .gitignore .",
@@ -23,7 +24,6 @@
     "chalk": "^5.3.0",
     "dotenv": "^16.3.2",
     "eslint": "^8.56.0",
-    "express": "^4.18.2",
     "nodemon": "^3.0.3",
     "ofetch": "^1.3.3",
     "socket.io": "^4.7.4",

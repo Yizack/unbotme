@@ -1,18 +1,18 @@
 import type { Client } from "tmi.js";
-import type { CloudflareUser } from "~/types/cloudflare";
+import type { D1User} from "~/types";
 import { options } from "~/utils/helpers";
 import TwitchAPI from "~/utils/twitch";
 import botslist from "~/data/botslist";
 import goodbots from "~/data/goodbots";
 import chalk from "chalk";
 
-export const banBots = async (client: Client, broadcasters: CloudflareUser[]) => {
+export const banBots = async (client: Client, broadcasters: D1User[]) => {
   const interval = 1 * 10 * 1000;
   await banBotHandler(client, broadcasters);
   setInterval(() => banBotHandler(client, broadcasters), interval);
 };
 
-async function banBotHandler (client: Client, broadcasters: CloudflareUser[]) {
+async function banBotHandler (client: Client, broadcasters: D1User[]) {
   for (const channel of client.getChannels()) {
     const channel_name = channel.replace("#", "");
     if (channel_name === options.identity.username) continue;

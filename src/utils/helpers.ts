@@ -1,4 +1,4 @@
-import type { CloudflareUser } from "~/types/cloudflare.js";
+import type { D1User } from "~/types/cloudflare.js";
 import type { Client } from "tmi.js";
 import chalk from "chalk";
 import * as dotenv from "dotenv";
@@ -21,7 +21,7 @@ export function onConnected(address: string, port: number) {
   console.info(`Connected to ${address}:${port}`);
 }
 
-export const joinChannels = async (client: Client, users: CloudflareUser[]) => {
+export const joinChannels = async (client: Client, users: D1User[]) => {
   for (const user of users) {
     const joined = await client.join(user.user_login).catch(() => false);
     if (!joined) {

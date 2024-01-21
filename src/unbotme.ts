@@ -1,23 +1,23 @@
-import express from "express";
-import http from "http";
+import type { LoginResult, D1User } from "~/types";
+import { createServer } from "http";
 import { Server } from "socket.io";
 import * as tmi from "tmi.js";
 import * as cron from "~/crons/banbots";
 import * as cmd from "~/commands";
 import { options, onConnected, extractCommand, joinChannels } from "~/utils/helpers";
-import type { CloudflareUser } from "./types/cloudflare";
 import CloudflareAPI from "~/utils/cloudflare";
 
-const app = express();
-const server = http.createServer(app);
+const server = createServer((req, res) => {
+  res.end("Hello World!");
+});
+
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
-    credentials: true
+    origin: "*"
   }
 });
 
-const broadcasters: CloudflareUser[] = [];
+const broadcasters: D1User[] = [];
 
 const client = new tmi.client(options);
 cron.banBots(client, broadcasters);
@@ -48,8 +48,14 @@ client.on("connected", async (address: string, port: number) => {
 client.connect();
 
 io.on("connection", (socket) => {
-  socket.on("login", (user: CloudflareUser) => {
-    console.info(user);
+  socket.on("login", async (result: LoginResult) => {
+    const broadcaster: D1User = {
+      id_user: Number(result.user.id),
+      user_login: result.user.login,
+      token: result.tokens.access_token
+    };
+    broadcasters.push(broadcaster);
+    await joinChannels(client, [broadcaster]);
   });
 });
 
