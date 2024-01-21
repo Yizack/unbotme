@@ -1,5 +1,5 @@
 import { $fetch } from "ofetch";
-import type { CloudflareAPIOptions, CloudflareSQLResponse } from "~/types/cloudflare.js";
+import type { CloudflareAPIOptions, CloudflareSQLResponse, CloudflareUser } from "~/types/cloudflare.js";
 
 class CloudflareAPI {
   private readonly base_url: string = "https://api.cloudflare.com/client/v4";
@@ -32,7 +32,7 @@ class CloudflareAPI {
   async getActiveUsers () {
     const users = await this.query("SELECT id_user, user_login, token FROM users WHERE active = ?", [1]);
     if (!users) return null;
-    return users as { id_user: number; user_login: string; token: string; }[];
+    return users as CloudflareUser[];
   }
 }
 
