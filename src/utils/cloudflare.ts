@@ -13,7 +13,7 @@ class CloudflareAPI {
     this.authorization = options.authorization;
   }
 
-  async query (query: string, bindings?: unknown[]) {
+  private async query (query: string, bindings?: unknown[]): Promise<Record<string, unknown>[] | void> {
     const req: CloudflareSQLResponse = await $fetch(`${this.base_url}/accounts/${this.account_identifier}/d1/database/${this.database_identifier}/query`, {
       method: "POST",
       headers: {
@@ -25,14 +25,22 @@ class CloudflareAPI {
         params: bindings
       }
     }).catch(() => null);
-    if (!req) return null;
+    if (!req) return;
     return req.result[0].results;
   }
 
-  async getActiveUsers () {
-    const users = await this.query("SELECT id_user, user_login, token FROM users WHERE active = ?", [1]);
-    if (!users) return null;
+  async getActiveUsers (): Promise<D1User[] | void> {
+    const users = await this.query("SELECT id_user, user_login, refresh_token FROM users WHERE active = ?", [1]);
+    if (!users) return;
     return users as D1User[];
+  }
+
+  async updateRefreshToken (id_user: number, refresh_token: string): Promise<void> {
+    await this.query("UPDATE users SET refresh_token = ? WHERE id_user = ?", [refresh_token, id_user]);
+  }
+
+  async inactivateUser (id_user: number): Promise<void> {
+    await this.query("UPDATE users SET active = ? WHERE id_user = ?", [0, id_user]);
   }
 }
 

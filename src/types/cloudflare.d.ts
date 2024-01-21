@@ -25,4 +25,8 @@ export type CloudflareSQLResponse = {
   success: boolean
 }
 
-export type D1User = { id_user: number; user_login: string; token: string; }
+export type D1User = {
+  id_user: number;
+  user_login: string;
+  refresh_token: string;
+}

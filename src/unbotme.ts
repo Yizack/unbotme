@@ -1,4 +1,4 @@
-import type { LoginResult, D1User } from "~/types";
+import type { LoginResult, Broadcaster, D1User } from "~/types";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import * as tmi from "tmi.js";
@@ -17,7 +17,7 @@ const io = new Server(server, {
   }
 });
 
-const broadcasters: D1User[] = [];
+const broadcasters: Broadcaster[] = [];
 
 const client = new tmi.client(options);
 cron.banBots(client, broadcasters);
@@ -40,7 +40,14 @@ client.on("connected", async (address: string, port: number) => {
   onConnected(address, port);
   const users = await CloudflareAPI.getActiveUsers();
   if (users) {
-    broadcasters.push(...users);
+    broadcasters.push(...users.map((user: D1User) => ({
+      id_user: Number(user.id_user),
+      user_login: user.user_login,
+      refresh_token: user.refresh_token,
+      access_token: null,
+      refresh_count: 0
+    })));
+
     await joinChannels(client, users);
   }
 });
@@ -49,10 +56,12 @@ client.connect();
 
 io.on("connection", (socket) => {
   socket.on("login", async (result: LoginResult) => {
-    const broadcaster: D1User = {
+    const broadcaster: Broadcaster = {
       id_user: Number(result.user.id),
       user_login: result.user.login,
-      token: result.tokens.access_token
+      refresh_token: result.tokens.access_token,
+      access_token: result.tokens.refresh_token,
+      refresh_count: 0
     };
     broadcasters.push(broadcaster);
     await joinChannels(client, [broadcaster]);

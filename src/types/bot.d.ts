@@ -1,3 +1,10 @@
+import type { D1User } from "~/types/cloudflare";
+
+export interface Broadcaster extends D1User {
+  access_token: string | null;
+  refresh_count: number;
+}
+
 export type LoginResult = {
   tokens: {
     access_token: string;
