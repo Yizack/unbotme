@@ -6,13 +6,14 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/unbotme.ts",
-    "start": "pm2 start node build/unbotme.mjs",
+    "start": "node build/unbotme.mjs",
+    "start:pm2": "pm2 start node build/unbotme.mjs",
     "build": "unbuild",
     "tunnel": "cloudflared tunnel run unbotme",
     "botslist": "npm run execute scripts/generateBotsList.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .ts,.js --fix --ignore-path .gitignore .",
-    "execute": "node --loader=./ts-node/loader.js --no-warnings=ExperimentalWarning --import=./ts-node/logError.js"
+    "execute": "node --loader=\"./ts-node/loader.js\" --no-warnings=\"ExperimentalWarning\" --import=\"./ts-node/logError.js\""
   },
   "keywords": [],
   "author": "Yizack Rangel",

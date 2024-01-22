@@ -8,7 +8,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-export const bot_id = "1021164206";
+export const bot_id = process.env.TWITCH_BOT_ID;
 
 const tokenData = JSON.parse(await fs.readFile(`./tokens.${bot_id}.json`, { encoding: "utf-8" }));
 
@@ -26,7 +26,7 @@ export const options = {
     reconnect: true,
     secure: true
   },
-  channels: ["#unbotme"],
+  channels: ["#" + process.env.TWITCH_BOT],
   authProvider
 };
 
