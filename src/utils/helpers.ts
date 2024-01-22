@@ -1,5 +1,5 @@
 import type { D1User } from "~/types/cloudflare.js";
-import type { Client } from "tmi.js";
+import type { Client } from "@twurple/auth-tmi";
 import chalk from "chalk";
 import * as dotenv from "dotenv";
 

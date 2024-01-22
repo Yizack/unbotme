@@ -1,4 +1,4 @@
-import type { Client } from "tmi.js";
+import type { Client } from "@twurple/auth-tmi";
 import type { Broadcaster } from "~/types";
 import { options } from "~/utils/helpers";
 import CloudflareAPI from "~/utils/cloudflare";
@@ -28,6 +28,7 @@ async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
       broadcasters[i].access_token = refreshRequest.access_token;
       broadcasters[i].refresh_token = refreshRequest.refresh_token;
       broadcasters[i].refresh_count = 0;
+
       if (broadcasters[i].refresh_token !== refreshRequest.refresh_token) {
         console.info(chalk.yellow(`Updating refresh token for ${chalk.white(broadcasters[i].user_login)}`));
         await CloudflareAPI.updateRefreshToken(broadcasters[i].id_user, broadcasters[i].refresh_token);
@@ -42,7 +43,7 @@ async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
       if (goodbots.includes(user_login)) continue;
       if (botslist.includes(user_login)) {
         console.info(chalk.blue(`...🔨 Banning ${chalk.white(user_login)} in ${chalk.white(channel)}`));
-        // client.ban(channel, user_login, "Bot");
+        // client.ban(channel, user_login, "Malicious bot detected");
       }
     }
   }

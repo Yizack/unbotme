@@ -6,5 +6,5 @@
 
 ## Authenticate
 ```
-https://id.twitch.tv/oauth2/authorize?client_id=<client_id>&redirect_uri=http://localhost:5173&response_type=token&scope=chat:read%20chat:edit%20channel:moderate%20moderator:read:chatters
+https://id.twitch.tv/oauth2/authorize?client_id=<client_id>&redirect_uri=http://localhost:5173&response_type=token&scope=chat:read%20chat:edit%20channel:moderate
 ```

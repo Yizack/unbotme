@@ -1,4 +1,4 @@
-import type { Client, ChatUserstate } from "tmi.js";
+import type { Client, ChatUserstate } from "@twurple/auth-tmi";
 import chalk from "chalk";
 
 export const inviteToChannel = async (client: Client, target: string, context: ChatUserstate) => {

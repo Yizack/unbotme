@@ -5,12 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  '@twurple/auth':
+    specifier: ^7.0.7
+    version: 7.0.7
+  '@twurple/auth-tmi':
+    specifier: ^7.0.7
+    version: 7.0.7(@twurple/auth@7.0.7)(tmi.js@1.8.5)
   '@types/node':
     specifier: ^20.11.5
     version: 20.11.5
-  '@types/tmi.js':
-    specifier: ^1.8.6
-    version: 1.8.6
   '@types/ws':
     specifier: ^8.5.10
     version: 8.5.10
@@ -38,9 +41,6 @@ devDependencies:
   socket.io:
     specifier: ^4.7.4
     version: 4.7.4
-  tmi.js:
-    specifier: ^1.8.5
-    version: 1.8.5
   ts-node:
     specifier: ^10.9.2
     version: 10.9.2(@types/node@20.11.5)(typescript@5.3.3)
@@ -63,6 +63,47 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+    dev: true
+
+  /@d-fischer/cross-fetch@5.0.4:
+    resolution: {integrity: sha512-u2IBCipsiE8565AbepyOrIk2LGuaIMr5ARFHHYmGmY9dp2HfX2iMqiLjPz0DnxH3ZBalYA4IxzxcstcgLIWRag==}
+    dependencies:
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
+  /@d-fischer/deprecate@2.0.2:
+    resolution: {integrity: sha512-wlw3HwEanJFJKctwLzhfOM6LKwR70FPfGZGoKOhWBKyOPXk+3a9Cc6S9zhm6tka7xKtpmfxVIReGUwPnMbIaZg==}
+    dev: true
+
+  /@d-fischer/detect-node@3.0.1:
+    resolution: {integrity: sha512-0Rf3XwTzuTh8+oPZW9SfxTIiL+26RRJ0BRPwj5oVjZFyFKmsj9RGfN2zuTRjOuA3FCK/jYm06HOhwNK+8Pfv8w==}
+    dev: true
+
+  /@d-fischer/logger@4.2.3:
+    resolution: {integrity: sha512-mJUx9OgjrNVLQa4od/+bqnmD164VTCKnK5B4WOW8TX5y/3w2i58p+PMRE45gUuFjk2BVtOZUg55JQM3d619fdw==}
+    dependencies:
+      '@d-fischer/detect-node': 3.0.1
+      '@d-fischer/shared-utils': 3.6.3
+      tslib: 2.6.2
+    dev: true
+
+  /@d-fischer/qs@7.0.2:
+    resolution: {integrity: sha512-yAu3xDooiL+ef84Jo8nLjDjWBRk7RXk163Y6aTvRB7FauYd3spQD/dWvgT7R4CrN54Juhrrc3dMY7mc+jZGurQ==}
+    engines: {node: '>=0.6'}
+    dev: true
+
+  /@d-fischer/shared-utils@3.6.3:
+    resolution: {integrity: sha512-Lz+Qk1WJLVoeREOHPZcIDTHOoxecxMSG2sq+x1xWYCH1exqiMKMMx06pXdy15UzHG7ohvQRNXk2oHqZ9EOl9jQ==}
+    dependencies:
+      tslib: 2.6.2
+    dev: true
+
+  /@d-fischer/typed-event-emitter@3.3.3:
+    resolution: {integrity: sha512-OvSEOa8icfdWDqcRtjSEZtgJTFOFNgTjje7zaL0+nAtu2/kZtRCSK5wUMrI/aXtCH8o0Qz2vA8UqkhWUTARFQQ==}
+    dependencies:
+      tslib: 2.6.2
     dev: true
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.56.0):
@@ -177,6 +218,52 @@ packages:
 
   /@tsconfig/node16@1.0.4:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
+    dev: true
+
+  /@twurple/api-call@7.0.7:
+    resolution: {integrity: sha512-7lCiOPmFqsH/hhGeoAuRgqid/DIeOI0GTqDh8TQ6D8IdoyWUFqBY6bnGrgfqQNGhTy0kXGnGxvavJrOC1T19bw==}
+    dependencies:
+      '@d-fischer/cross-fetch': 5.0.4
+      '@d-fischer/qs': 7.0.2
+      '@d-fischer/shared-utils': 3.6.3
+      '@twurple/common': 7.0.7
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
+  /@twurple/auth-tmi@7.0.7(@twurple/auth@7.0.7)(tmi.js@1.8.5):
+    resolution: {integrity: sha512-tgyOI6GzXUnk6eETuSMJUGL95rBtFeR4P78kNcxFqCThLO7NcgLTcCHyvKUwm0/G2FvIpw5JXI3UG2bQE6mcOw==}
+    peerDependencies:
+      '@twurple/auth': 7.0.7
+      tmi.js: ^1.6.0
+    dependencies:
+      '@d-fischer/deprecate': 2.0.2
+      '@twurple/auth': 7.0.7
+      '@types/tmi.js': 1.8.6
+      tmi.js: 1.8.5
+      tslib: 2.6.2
+    dev: true
+
+  /@twurple/auth@7.0.7:
+    resolution: {integrity: sha512-peulxyCcbjwSfppSR9WzJFJFd+AEa7YhCIw6rsLAGjtT7KI2S1/uwqB7iJ7Zyue6DxG5ofk4YUh94/ZgA7PYgg==}
+    dependencies:
+      '@d-fischer/logger': 4.2.3
+      '@d-fischer/shared-utils': 3.6.3
+      '@d-fischer/typed-event-emitter': 3.3.3
+      '@twurple/api-call': 7.0.7
+      '@twurple/common': 7.0.7
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
+  /@twurple/common@7.0.7:
+    resolution: {integrity: sha512-q+297EtBtujWtR5O88Nc5uSAKXTbAbWzDrCRWGXF5c01FolrnHGuOUyJ98p4+lepqLMxpRjldbQuPBUVbUzeIQ==}
+    dependencies:
+      '@d-fischer/shared-utils': 3.6.3
+      klona: 2.0.6
+      tslib: 2.6.2
     dev: true
 
   /@types/cookie@0.4.1:
@@ -929,6 +1016,11 @@ packages:
       json-buffer: 3.0.1
     dev: true
 
+  /klona@2.0.6:
+    resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
+    engines: {node: '>= 8'}
+    dev: true
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -1364,6 +1456,10 @@ packages:
       json5: 2.2.3
       minimist: 1.2.8
       strip-bom: 3.0.0
+    dev: true
+
+  /tslib@2.6.2:
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: true
 
   /type-check@0.4.0:
