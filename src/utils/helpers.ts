@@ -1,6 +1,7 @@
 import type { D1User } from "~/types/cloudflare.js";
 import type { Client } from "@twurple/auth-tmi";
-import chalk from "chalk";
+import { consola } from "consola";
+import { colors } from "consola/utils";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -18,16 +19,16 @@ export const extractCommand = (message: string) => {
 };
 
 export function onConnected(address: string, port: number) {
-  console.info(`Connected to ${address}:${port}`);
+  consola.success(`Connected to ${address}:${port}`);
 }
 
 export const joinChannels = async (client: Client, users: D1User[]) => {
   for (const user of users) {
     const joined = await client.join(user.user_login).catch(() => false);
     if (!joined) {
-      console.info(`❌ Couldn't join ${user.user_login}`);
+      consola.error(`❌ Couldn't join ${user.user_login}`);
       continue;
     }
-    console.info(chalk.yellow(`🚪 Joined ${user.user_login} (${user.id_user})`));
+    consola.success(colors.yellow(`🚪 Joined ${colors.white(user.user_login)} (${user.id_user})`));
   }
 };

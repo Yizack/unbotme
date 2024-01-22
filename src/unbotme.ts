@@ -7,6 +7,7 @@ import { options, onConnected, extractCommand, joinChannels } from "~/utils/help
 import CloudflareAPI from "~/utils/cloudflare";
 import * as cron from "~/crons/banbots";
 import * as cmd from "~/commands";
+import { consola } from "consola";
 
 const server = createServer((req, res) => {
   res.end("Hello World!");
@@ -80,5 +81,5 @@ io.on("connection", (socket) => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  console.info(`Socket open, port ${port}`);
+  consola.success(`Socket open, port ${port}`);
 });

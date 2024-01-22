@@ -1,5 +1,4 @@
 import type { Client, ChatUserstate } from "@twurple/auth-tmi";
-import chalk from "chalk";
 
 export const inviteToChannel = async (client: Client, target: string, context: ChatUserstate) => {
   const user = {
@@ -14,6 +13,6 @@ export const inviteToChannel = async (client: Client, target: string, context: C
     client.say(target, `@${user.username} I couldn't join your channel, sorry!`);
     return;
   }
-  console.info(chalk.yellow(`🚪 Joined ${user.username} (${user.id})`));
+  console.info(`🚪 Joined ${user.username} (${user.id})`);
   client.say(target, `@${user.username} I joined your channel, type /mod in your chat so I can do my duty!`);
 };
