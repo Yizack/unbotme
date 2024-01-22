@@ -44,7 +44,7 @@ async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
       if (goodbots.includes(user_login)) continue;
       if (botslist.includes(user_login)) {
         consola.info(colors.blue(`...🔨 Banning ${colors.white(user_login)} in ${colors.white(channel)}`));
-        await TwitchAPI.banUser({ user_id, reason: "Malicious bot detected" });
+        await TwitchAPI.banUser(broadcasters[i].id_user, { user_id, reason: "Malicious bot detected" });
       }
     }
   }

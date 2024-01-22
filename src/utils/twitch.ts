@@ -37,16 +37,16 @@ class TwitchAPI {
     return req.data;
   }
 
-  async banUser (data: { user_id: string, reason: string }): Promise<void> {
+  async banUser (broadcaster_id: number, data: { user_id: string, reason: string }): Promise<void> {
     const access_token = (await options.authProvider.getAccessTokenForUser(bot_id)).accessToken;
-    await $fetch(`https://api.twitch.tv/helix/moderation/bans?broadcaster_id=${bot_id}&moderator_id=${bot_id}`, {
+    await $fetch(`https://api.twitch.tv/helix/moderation/bans?broadcaster_id=${broadcaster_id}&moderator_id=${bot_id}`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${access_token}`,
         "Client-ID": this.client_id,
       },
       body: { data }
-    });
+    }).catch(() => null);
   }
 }
 
