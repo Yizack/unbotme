@@ -16,7 +16,7 @@ const server = createServer((req, res) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "*"
+    origin: process.env.ORIGIN
   }
 });
 
