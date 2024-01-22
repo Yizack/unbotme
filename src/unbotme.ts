@@ -1,12 +1,13 @@
+import { promises as fs } from "fs";
 import type { LoginResult, Broadcaster, D1User } from "~/types";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { client as tmi } from "@twurple/auth-tmi";
-import { StaticAuthProvider } from "@twurple/auth";
-import { options, onConnected, extractCommand, joinChannels } from "~/utils/helpers";
+import { RefreshingAuthProvider } from "@twurple/auth";
+import { options, onConnected, /*extractCommand,*/ joinChannels } from "~/utils/helpers";
 import CloudflareAPI from "~/utils/cloudflare";
 import * as cron from "~/crons/banbots";
-import * as cmd from "~/commands";
+// import * as cmd from "~/commands";
 import { consola } from "consola";
 
 const server = createServer((req, res) => {
@@ -21,29 +22,30 @@ const io = new Server(server, {
 
 const broadcasters: Broadcaster[] = [];
 
-const authProvider = new StaticAuthProvider(process.env.TWITCH_CLIENT_ID, process.env.TWITCH_ACCESS);
+const tokenData = JSON.parse(await fs.readFile("./tokens.1021164206.json", { encoding: "utf-8" }));
+
+const authProvider = new RefreshingAuthProvider({
+  clientId: process.env.TWITCH_CLIENT_ID,
+  clientSecret: process.env.TWITCH_SECRET,
+});
+
+authProvider.onRefresh(async (userId, newTokenData) => await fs.writeFile(`./tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), { encoding: "utf-8" }));
+await authProvider.addUserForToken(tokenData, ["chat"]);
+
 const client = new tmi({
-  options: { debug: true, messagesLogLevel: "info" },
-  connection: {
-    reconnect: true,
-    secure: true
-  },
-  authProvider: authProvider,
-  channels: ["unbotme"]
+  ...options,
+  authProvider,
 });
 
 client.on("message", async (target, context, message, self) => {
   if (self || !message.startsWith("!")) return;
-
+  /*
   const command = extractCommand(message);
 
   switch (command) {
-  // Invite command
-  case "invite":
-    if (target !== "#" + options.identity.username) return;
-    await cmd.inviteToChannel(client, target, context);
-    break;
+    add commands
   }
+  */
 });
 
 client.on("connected", async (address: string, port: number) => {

@@ -35,6 +35,17 @@ class TwitchAPI {
     if (!req) return;
     return req.data;
   }
+
+  async banUser (broadcaster: Broadcaster, data: { user_id: string, reason: string }): Promise<void> {
+    await $fetch(`https://api.twitch.tv/helix/moderation/bans?broadcaster_id=${broadcaster.id_user}&moderator_id=${broadcaster.id_user}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${broadcaster.access_token}`,
+        "Client-ID": this.client_id,
+      },
+      body: { data }
+    });
+  }
 }
 
 export default new TwitchAPI({

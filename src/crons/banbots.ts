@@ -16,8 +16,8 @@ export const banBots = async (client: Client, broadcasters: Broadcaster[]) => {
 
 async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
   for (const channel of client.getChannels()) {
+    if (channel === options.channels[0]) continue;
     const channel_name = channel.replace("#", "");
-    if (channel_name === options.identity.username) continue;
     const i = broadcasters.findIndex((broadcaster) => broadcaster.user_login === channel_name);
     if (!broadcasters[i].access_token || broadcasters[i].refresh_count >= 10) {
       const refreshRequest = await TwitchAPI.refreshToken(broadcasters[i].refresh_token);
@@ -40,11 +40,11 @@ async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
     broadcasters[i].refresh_count++;
     consola.start(colors.green(`🤖 Banning bots in ${colors.white(channel)}...`));
     for (const chatter of chatters) {
-      const { user_login } = chatter;
+      const { user_login, user_id } = chatter;
       if (goodbots.includes(user_login)) continue;
       if (botslist.includes(user_login)) {
         consola.info(colors.blue(`...🔨 Banning ${colors.white(user_login)} in ${colors.white(channel)}`));
-        // client.ban(channel, user_login, "Malicious bot detected");
+        await TwitchAPI.banUser(broadcasters[i], { user_id, reason: "Malicious bot detected" });
       }
     }
   }

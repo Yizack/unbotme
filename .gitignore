@@ -6,3 +6,4 @@ dist
 build
 scripts/**/*.js
 src/**/*.js
+tokens.*

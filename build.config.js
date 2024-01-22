@@ -13,7 +13,11 @@ export default defineBuildConfig({
 
   // Change outDir, default is 'dist'
   outDir: "build",
-
+  rollup:{
+    esbuild: {
+      target: "es2022",
+    }
+  },
   // Generates .d.ts declaration file
   declaration: "compatible",
   externals: [

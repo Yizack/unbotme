@@ -7,11 +7,12 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const options = {
-  identity: {
-    username: "unbotme",
-    password: "oauth:" + process.env.TWITCH_TOKEN
+  options: { debug: true, messagesLogLevel: "info" },
+  connection: {
+    reconnect: true,
+    secure: true
   },
-  channels: ["unbotme"]
+  channels: ["#unbotme"]
 };
 
 export const extractCommand = (message: string) => {
