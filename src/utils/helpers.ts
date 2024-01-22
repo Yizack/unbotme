@@ -2,9 +2,23 @@ import type { D1User } from "~/types/cloudflare.js";
 import type { Client } from "@twurple/auth-tmi";
 import { consola } from "consola";
 import { colors } from "consola/utils";
+import { promises as fs } from "fs";
+import { RefreshingAuthProvider } from "@twurple/auth";
 import * as dotenv from "dotenv";
 
 dotenv.config();
+
+export const bot_id = "1021164206";
+
+const tokenData = JSON.parse(await fs.readFile(`./tokens.${bot_id}.json`, { encoding: "utf-8" }));
+
+const authProvider = new RefreshingAuthProvider({
+  clientId: process.env.TWITCH_CLIENT_ID,
+  clientSecret: process.env.TWITCH_SECRET,
+});
+
+authProvider.onRefresh(async (userId, newTokenData) => await fs.writeFile(`./tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), { encoding: "utf-8" }));
+await authProvider.addUserForToken(tokenData, ["chat"]);
 
 export const options = {
   options: { debug: true, messagesLogLevel: "info" },
@@ -12,7 +26,8 @@ export const options = {
     reconnect: true,
     secure: true
   },
-  channels: ["#unbotme"]
+  channels: ["#unbotme"],
+  authProvider
 };
 
 export const extractCommand = (message: string) => {

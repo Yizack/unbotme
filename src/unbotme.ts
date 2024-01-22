@@ -1,9 +1,7 @@
-import { promises as fs } from "fs";
 import type { LoginResult, Broadcaster, D1User } from "~/types";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { client as tmi } from "@twurple/auth-tmi";
-import { RefreshingAuthProvider } from "@twurple/auth";
 import { options, onConnected, /*extractCommand,*/ joinChannels } from "~/utils/helpers";
 import CloudflareAPI from "~/utils/cloudflare";
 import * as cron from "~/crons/banbots";
@@ -22,20 +20,7 @@ const io = new Server(server, {
 
 const broadcasters: Broadcaster[] = [];
 
-const tokenData = JSON.parse(await fs.readFile("./tokens.1021164206.json", { encoding: "utf-8" }));
-
-const authProvider = new RefreshingAuthProvider({
-  clientId: process.env.TWITCH_CLIENT_ID,
-  clientSecret: process.env.TWITCH_SECRET,
-});
-
-authProvider.onRefresh(async (userId, newTokenData) => await fs.writeFile(`./tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), { encoding: "utf-8" }));
-await authProvider.addUserForToken(tokenData, ["chat"]);
-
-const client = new tmi({
-  ...options,
-  authProvider,
-});
+const client = new tmi(options);
 
 client.on("message", async (target, context, message, self) => {
   if (self || !message.startsWith("!")) return;

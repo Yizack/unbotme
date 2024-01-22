@@ -1,5 +1,6 @@
 import { $fetch } from "ofetch";
 import type { Broadcaster, TwitchRefreshResponse, TwitchChattersResponse } from "~/types";
+import { bot_id, options } from "~/utils/helpers";
 
 class TwitchAPI {
   private client_id: string;
@@ -36,11 +37,12 @@ class TwitchAPI {
     return req.data;
   }
 
-  async banUser (broadcaster: Broadcaster, data: { user_id: string, reason: string }): Promise<void> {
-    await $fetch(`https://api.twitch.tv/helix/moderation/bans?broadcaster_id=${broadcaster.id_user}&moderator_id=${broadcaster.id_user}`, {
+  async banUser (data: { user_id: string, reason: string }): Promise<void> {
+    const access_token = (await options.authProvider.getAccessTokenForUser(bot_id)).accessToken;
+    await $fetch(`https://api.twitch.tv/helix/moderation/bans?broadcaster_id=${bot_id}&moderator_id=${bot_id}`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${broadcaster.access_token}`,
+        "Authorization": `Bearer ${access_token}`,
         "Client-ID": this.client_id,
       },
       body: { data }
