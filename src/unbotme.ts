@@ -76,8 +76,17 @@ io.on("connection", (socket) => {
       refresh_token: user.tokens.refresh_token,
       refresh_count: 0
     };
-    broadcasters.push(broadcaster);
-    await joinChannels(client, [broadcaster]);
+
+    const index = broadcasters.findIndex((b) => b.id_user === broadcaster.id_user);
+    if (index >= 0) {
+      broadcasters[index].access_token = broadcaster.access_token;
+      broadcasters[index].refresh_token = broadcaster.refresh_token;
+      broadcasters[index].refresh_count = broadcaster.refresh_count;
+    }
+    else {
+      broadcasters.push(broadcaster);
+      await joinChannels(client, [broadcaster]);
+    }
   });
 });
 
