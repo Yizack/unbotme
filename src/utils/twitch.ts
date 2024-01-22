@@ -27,7 +27,7 @@ class TwitchAPI {
   }
 
   async getChatters (broadcaster: Broadcaster): Promise<TwitchChattersResponse[] | void> {
-    const req = await $fetch(`https://api.twitch.tv/helix/chat/chatters?broadcaster_id=${broadcaster.id_user}&moderator_id=${broadcaster.id_user}`, {
+    const req = await $fetch(`https://api.twitch.tv/helix/chat/chatters?broadcaster_id=${broadcaster.id_user}&moderator_id=${broadcaster.id_user}&first=1000`, {
       headers: {
         "Authorization": `Bearer ${broadcaster.access_token}`,
         "Client-ID": this.client_id,
