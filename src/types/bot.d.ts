@@ -24,3 +24,9 @@ export type LoginResult = {
     token_type: "bearer"
   };
 }
+
+export type LogoutResult = {
+  id_user: number;
+  user_login: string;
+  username: string;
+}

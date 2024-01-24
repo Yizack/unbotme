@@ -1,4 +1,4 @@
-import type { LoginResult, Broadcaster, D1User } from "~/types";
+import type { LoginResult, Broadcaster, D1User, LogoutResult } from "~/types";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { client as tmi } from "@twurple/auth-tmi";
@@ -71,6 +71,14 @@ io.on("connection", (socket) => {
     else {
       broadcasters.push(broadcaster);
       await joinChannels(client, [broadcaster]);
+    }
+  });
+
+  socket.on("logout", async (user: LogoutResult) => {
+    const index = broadcasters.findIndex((b) => b.id_user === Number(user.id_user));
+    if (index >= 0) {
+      broadcasters.splice(index, 1);
+      await client.part(user.username);
     }
   });
 });
