@@ -32,7 +32,7 @@ class TwitchAPI {
         "Authorization": `Bearer ${broadcaster.access_token}`,
         "Client-ID": this.client_id,
       }
-    });
+    }).catch(() => null);
     if (!req) return;
     return req.data;
   }
