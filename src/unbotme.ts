@@ -42,7 +42,7 @@ client.on("connected", async (address: string, port: number) => {
       user_login: user.user_login,
       refresh_token: user.refresh_token,
       access_token: null,
-      refresh_count: 0
+      refresh_count: 10
     })));
 
     await joinChannels(client, users);
