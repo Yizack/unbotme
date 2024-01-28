@@ -9,6 +9,7 @@ export default [
   "fossabot",
   "isnicable",
   "kikettebot",
+  "kofistreambot",
   "ksyncbot",
   "logiceftbot",
   "lolrankbot",
