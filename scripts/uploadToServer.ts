@@ -9,7 +9,7 @@ const localFolderPath = "./build";
 const remoteFolderPath = "unbotme/build";
 
 ssh.on("ready", () => {
-  ssh.sftp((err: Record<string, string>, sftp) => {
+  ssh.sftp((err, sftp) => {
     if (err) throw err;
     sftp.mkdir(remoteFolderPath, () => {
       const files = readdirSync(localFolderPath);
@@ -37,7 +37,6 @@ ssh.on("ready", () => {
       console.info("Folder upload complete");
     });
   });
-
 }).connect({
   host: process.env.SSH_HOST,
   port: 22,

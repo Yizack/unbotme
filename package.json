@@ -23,6 +23,7 @@
     "@twurple/auth": "^7.0.8",
     "@twurple/auth-tmi": "^7.0.8",
     "@types/node": "^20.11.16",
+    "@types/ssh2": "^1.11.19",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
     "consola": "^3.2.3",
