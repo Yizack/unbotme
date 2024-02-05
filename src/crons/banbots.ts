@@ -8,7 +8,9 @@ import goodbots from "~/data/goodbots.json" assert { type: "json" };
 import { consola } from "consola";
 import { colors } from "consola/utils";
 
-export { botslist, goodbots };
+const badbots = botslist.filter((bot) => !goodbots.includes(bot));
+
+export { botslist, goodbots, badbots };
 
 export const banBots = async (client: Client, broadcasters: Broadcaster[]) => {
   const interval = 15 * 60 * 1000; // 15 min monitoring
@@ -43,8 +45,7 @@ async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
     consola.start(colors.green(`🤖 Banning bots in ${colors.white(channel)}...`));
     for (const chatter of chatters) {
       const { user_login, user_id } = chatter;
-      if (goodbots.includes(user_login)) continue;
-      if (botslist.includes(user_login)) {
+      if (badbots.includes(user_login)) {
         consola.info(colors.blue(`...🔨 Banning ${colors.white(user_login)} in ${colors.white(channel)}`));
         await TwitchAPI.banUser(broadcasters[i].id_user, { user_id, reason: "Malicious bot detected" });
       }

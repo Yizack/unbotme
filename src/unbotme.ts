@@ -12,6 +12,7 @@ const server = createServer((req, res) => {
   const endpoints = {
     "/api/botslist": () => sendJsonResponse(res, cron.botslist),
     "/api/goodbots": () => sendJsonResponse(res, cron.goodbots),
+    "/api/badbots": () => sendJsonResponse(res, cron.badbots),
     "/": () => res.writeHead(301, { Location: process.env.ORIGIN }) && res.end()
   };
   const handler = endpoints[req.url] || endpoints["/"];
