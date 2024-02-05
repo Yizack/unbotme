@@ -47,8 +47,10 @@ jobs:
           git config --local user.email "yizackr@gmail.com"
           git config --local user.name "Yizack Rangel"
           git add ./src/data/botslist.json
-          git commit -m "chore: update bots list"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "chore: update bots list"
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          fi
 
       - name: Build 🏗️
         run: pnpm build
