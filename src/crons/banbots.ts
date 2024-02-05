@@ -4,9 +4,11 @@ import { options } from "~/utils/helpers";
 import CloudflareAPI from "~/utils/cloudflare";
 import TwitchAPI from "~/utils/twitch";
 import botslist from "~/data/botslist.json" assert { type: "json" };
-import goodbots from "~/data/goodbots";
+import goodbots from "~/data/goodbots.json" assert { type: "json" };
 import { consola } from "consola";
 import { colors } from "consola/utils";
+
+export { botslist, goodbots };
 
 export const banBots = async (client: Client, broadcasters: Broadcaster[]) => {
   const interval = 15 * 60 * 1000; // 15 min monitoring
