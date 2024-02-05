@@ -3,33 +3,22 @@ import path from "path";
 
 export default defineBuildConfig({
   clean: true,
-  alias: {
-    "~": path.resolve(__dirname, "src"),
-  },
-
   entries: [
-    "./src/unbotme.ts",
+    "./src/unbotme.ts"
   ],
-
-  // Change outDir, default is 'dist'
   outDir: "build",
-  rollup:{
+  rollup: {
     esbuild: {
       target: "es2022",
-    }
+      minify: true
+    },
+    alias: {
+      "~": path.resolve(__dirname, "src"),
+    },
+    resolve: {
+      browser: false
+    },
+    inlineDependencies: true
   },
-  // Generates .d.ts declaration file
-  declaration: "compatible",
-  externals: [
-    "@types/node",
-    "@typescript-eslint/eslint-plugin",
-    "@typescript-eslint/parser",
-    "eslint",
-    "nodemon",
-    "pm2",
-    "ts-node",
-    "tsconfig-paths",
-    "typescript",
-    "unbuild"
-  ],
+  declaration: false
 });

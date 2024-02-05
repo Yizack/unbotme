@@ -3,6 +3,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "target": "ESNext",
     "baseUrl": ".",
     "paths": {

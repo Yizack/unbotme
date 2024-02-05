@@ -17,9 +17,12 @@ const getURL = (specifier) => {
 
 export async function resolve(specifier, context, defaultResolver) {
   const mappedSpecifier = matchPath(specifier);
-
   if (mappedSpecifier) {
     specifier = `${mappedSpecifier}.js`;
+
+    if (mappedSpecifier.endsWith(".json")) {
+      return resolveTs(getURL(mappedSpecifier), context, defaultResolver);
+    }
 
     /*
     the resolve functionality can only work with file URLs, so we need to convert, this is especially

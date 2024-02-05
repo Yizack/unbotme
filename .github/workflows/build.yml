@@ -1,0 +1,66 @@
+name: Build
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Upload to Server
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Check if triggered by another workflow
+        run: |
+          if [ "$GITHUB_EVENT_NAME" == "workflow_run" ] && [ "$GITHUB_ACTOR" == "Yizack" ]; then
+            echo "Workflow triggered by another workflow. Skipping..."
+            exit 78
+          fi
+
+      - run: corepack enable
+
+      - name: Setup Node 🐢
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install Dependencies 📦
+        run: pnpm install
+
+      - name: Update bots list
+        run: |
+          pnpm botslist
+          git config --local user.email "yizackr@gmail.com"
+          git config --local user.name "Yizack Rangel"
+          git add ./src/data/botslist.json
+          git commit -m "chore: update bots list"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Build 🏗️
+        run: pnpm build
+
+      - name: Add upload Secrets 📂
+        run: |
+          echo "SSH_HOST=${{ secrets.SSH_HOST }}" >> .env
+          echo "SSH_USERNAME=${{ secrets.SSH_USERNAME }}" >> .env
+          echo "SSH_PASSWORD=${{ secrets.SSH_PASSWORD }}" >> .env
+
+      - name: Upload to Server 🚀
+        run: pnpm upload
+
+      - name: Clean Up 🧹
+        run: rm .env

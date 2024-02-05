@@ -14,7 +14,7 @@ const sources = {
 };
 
 sources.twitchInsights.bots = await getTwitchInsightsBots();
-writeFileSync("./src/data/botslist.ts", `export default ${JSON.stringify(sources.twitchInsights.bots)};`);
+writeFileSync("./src/data/botslist.json", JSON.stringify(sources.twitchInsights.bots));
 
 async function getTwitchInsightsBots () {
   // example of response [ 'slocool', 26012, 1565348543 ]
