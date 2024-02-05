@@ -59,8 +59,8 @@ client.on("connected", async (address: string, port: number) => {
 
 client.connect();
 
-io.on("join", (socket) => {
-  socket.on("login", async (user: JoinResult) => {
+io.on("connection", (socket) => {
+  socket.on("join", async (user: JoinResult) => {
     const broadcaster: Broadcaster = {
       id_user: Number(user.id),
       user_login: user.login,
