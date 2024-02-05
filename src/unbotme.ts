@@ -2,14 +2,20 @@ import type { LoginResult, Broadcaster, D1User, LogoutResult } from "~/types";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { client as tmi } from "@twurple/auth-tmi";
-import { options, onConnected, /*extractCommand,*/ joinChannels } from "~/utils/helpers";
+import { options, onConnected, /*extractCommand,*/ joinChannels, sendJsonResponse } from "~/utils/helpers";
 import CloudflareAPI from "~/utils/cloudflare";
 import * as cron from "~/crons/banbots";
 // import * as cmd from "~/commands";
 import { consola } from "consola";
 
 const server = createServer((req, res) => {
-  res.end("Hello World!");
+  const endpoints = {
+    "/api/botslist": () => sendJsonResponse(res, cron.botslist),
+    "/api/goodbots": () => sendJsonResponse(res, cron.goodbots),
+    "/": () => res.writeHead(301, { Location: process.env.ORIGIN }) && res.end()
+  };
+  const handler = endpoints[req.url] || endpoints["/"];
+  handler();
 });
 
 const io = new Server(server, {

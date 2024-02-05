@@ -5,6 +5,7 @@ import { colors } from "consola/utils";
 import { promises as fs } from "fs";
 import { RefreshingAuthProvider } from "@twurple/auth";
 import * as dotenv from "dotenv";
+import type { IncomingMessage, ServerResponse } from "http";
 
 dotenv.config();
 
@@ -47,4 +48,9 @@ export const joinChannels = async (client: Client, users: D1User[]) => {
     }
     consola.success(colors.yellow(`🚪 Joined ${colors.white(user.user_login)} (${user.id_user})`));
   }
+};
+
+export const sendJsonResponse = (res: ServerResponse<IncomingMessage>, data: unknown) => {
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(data));
 };
