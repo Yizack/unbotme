@@ -5,7 +5,7 @@ export interface Broadcaster extends D1User {
   refresh_count: number;
 }
 
-export type LoginResult = {
+export type JoinResult = {
   id: string;
   login: string;
   display_name: string;
@@ -25,7 +25,7 @@ export type LoginResult = {
   };
 }
 
-export type LogoutResult = {
+export type LeaveResult = {
   id_user: number;
   user_login: string;
   username: string;
