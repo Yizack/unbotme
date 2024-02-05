@@ -41,9 +41,11 @@ jobs:
       - name: Install Dependencies 📦
         run: pnpm install
 
-      - name: Update bots list
+      - name: Update bots list 🤖
+        run: pnpm botslist
+        
+      - name: Commit changes 📝
         run: |
-          pnpm botslist
           git config --local user.email "yizackr@gmail.com"
           git config --local user.name "Yizack Rangel"
           git add ./src/data/botslist.json
