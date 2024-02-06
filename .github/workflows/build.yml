@@ -48,6 +48,7 @@ jobs:
         run: |
           git config --local user.email "yizackr@gmail.com"
           git config --local user.name "Yizack Rangel"
+          git pull origin main
           git add ./src/data/botslist.json
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "chore: update bots list"
