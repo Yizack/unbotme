@@ -41,14 +41,19 @@ jobs:
       - name: Install Dependencies 📦
         run: pnpm install
 
+      - name: Setup Git 🛠️
+        run: |
+          git config --local user.email "yizackr@gmail.com"
+          git config --local user.name "Yizack Rangel"
+
+      - name: Pull changes if needed 🔄
+        run: git pull origin main
+
       - name: Update bots list 🤖
         run: pnpm botslist
         
       - name: Commit changes 📝
         run: |
-          git config --local user.email "yizackr@gmail.com"
-          git config --local user.name "Yizack Rangel"
-          git pull origin main
           git add ./src/data/botslist.json
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "chore: update bots list"
