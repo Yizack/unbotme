@@ -2,6 +2,6 @@
   "watch": ["src"],
   "ext": "ts",
   "execMap": {
-    "ts": "npm run execute"
+    "ts": "tsx"
   }
 }
