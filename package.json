@@ -10,11 +10,10 @@
     "start:pm2": "pm2 start node build/unbotme.mjs",
     "build": "unbuild",
     "tunnel": "cloudflared tunnel run unbotme",
-    "upload": "npm run execute scripts/uploadToServer.ts",
-    "botslist": "npm run execute scripts/generateBotsList.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext .ts,.js --fix --ignore-path .gitignore .",
-    "execute": "node --loader=\"./ts-node/loader.js\" --no-warnings=\"ExperimentalWarning\" --import=\"./ts-node/logError.js\""
+    "upload": "tsx scripts/uploadToServer.ts",
+    "botslist": "tsx scripts/generateBotsList.ts",
+    "test": "vitest run --reporter=verbose",
+    "lint": "eslint --ext .ts,.js --fix --ignore-path .gitignore ."
   },
   "keywords": [],
   "author": "Yizack Rangel",

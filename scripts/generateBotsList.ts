@@ -1,6 +1,9 @@
 import { $fetch } from "ofetch";
 import { writeFileSync } from "fs";
 import type { twitchInsightsList } from "../src/types/scripts.js";
+import { consola } from "consola";
+
+consola.start("Updating bots list");
 
 const sources = {
   twitchInsights: {
@@ -15,6 +18,7 @@ const sources = {
 
 sources.twitchInsights.bots = await getTwitchInsightsBots();
 writeFileSync("./src/data/botslist.json", JSON.stringify(sources.twitchInsights.bots));
+consola.success(`Bots list updated. Bots count: ${sources.twitchInsights.bots.length}.`);
 
 async function getTwitchInsightsBots () {
   // example of response [ 'slocool', 26012, 1565348543 ]
