@@ -19,8 +19,8 @@
   "author": "Yizack Rangel",
   "license": "MIT",
   "devDependencies": {
-    "@twurple/auth": "^7.0.10",
-    "@twurple/auth-tmi": "^7.0.10",
+    "@twurple/auth": "^7.1.0",
+    "@twurple/auth-tmi": "^7.1.0",
     "@types/node": "^20.11.28",
     "@types/ssh2": "^1.15.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
