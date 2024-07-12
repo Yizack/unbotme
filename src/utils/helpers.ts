@@ -15,7 +15,7 @@ const tokenData = JSON.parse(await fs.readFile(`./tokens.${bot_id}.json`, { enco
 
 const authProvider = new RefreshingAuthProvider({
   clientId: process.env.TWITCH_CLIENT_ID,
-  clientSecret: process.env.TWITCH_SECRET,
+  clientSecret: process.env.TWITCH_SECRET
 });
 
 authProvider.onRefresh(async (userId, newTokenData) => await fs.writeFile(`./tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), { encoding: "utf-8" }));
@@ -35,7 +35,7 @@ export const extractCommand = (message: string) => {
   return message.split(" ")[0].replace("!", "");
 };
 
-export function onConnected(address: string, port: number) {
+export function onConnected (address: string, port: number) {
   consola.success(`Connected to ${address}:${port}`);
 }
 

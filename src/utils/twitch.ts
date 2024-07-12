@@ -16,7 +16,7 @@ class TwitchAPI {
       refresh_token,
       client_id: this.client_id,
       client_secret: this.client_secret,
-      grant_type: "refresh_token",
+      grant_type: "refresh_token"
     });
 
     const req = await $fetch(`https://id.twitch.tv/oauth2/token?${urlParams}`, {
@@ -30,7 +30,7 @@ class TwitchAPI {
     const req = await $fetch(`https://api.twitch.tv/helix/chat/chatters?broadcaster_id=${broadcaster.id_user}&moderator_id=${broadcaster.id_user}&first=1000`, {
       headers: {
         "Authorization": `Bearer ${broadcaster.access_token}`,
-        "Client-ID": this.client_id,
+        "Client-ID": this.client_id
       }
     }).catch(() => null);
     if (!req) return;
@@ -43,7 +43,7 @@ class TwitchAPI {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${access_token}`,
-        "Client-ID": this.client_id,
+        "Client-ID": this.client_id
       },
       body: { data }
     }).catch(() => null);

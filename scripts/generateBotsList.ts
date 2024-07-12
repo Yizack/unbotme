@@ -8,12 +8,12 @@ consola.start("Updating bots list");
 const sources = {
   twitchInsights: {
     url: "https://api.twitchinsights.net/v1/bots/all",
-    bots: []
+    bots: [] as string[]
   },
   streamCharts: {
     url: "https://streamscharts.com/tools/bots",
-    bots: []
-  },
+    bots: [] as string[]
+  }
 };
 
 sources.twitchInsights.bots = await getTwitchInsightsBots();

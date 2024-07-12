@@ -16,17 +16,17 @@ export type JoinResult = {
   offline_image_url: string;
   view_count: number;
   email: string;
-  created_at: string
+  created_at: string;
   tokens: {
     access_token: string;
     expires_in: number;
     refresh_token: string;
-    token_type: "bearer"
+    token_type: "bearer";
   };
-}
+};
 
 export type LeaveResult = {
   id_user: number;
   user_login: string;
   username: string;
-}
+};

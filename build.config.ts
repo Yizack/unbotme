@@ -13,7 +13,12 @@ export default defineBuildConfig({
       minify: true
     },
     alias: {
-      "~": path.resolve(__dirname, "src"),
+      entries: [
+        {
+          find: "~",
+          replacement: path.resolve(__dirname, "src")
+        }
+      ]
     },
     resolve: {
       browser: false
