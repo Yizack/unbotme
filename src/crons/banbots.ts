@@ -23,6 +23,7 @@ async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
     if (channel === options.channels[0]) continue;
     const channel_name = channel.replace("#", "");
     const i = broadcasters.findIndex((broadcaster) => broadcaster.user_login === channel_name);
+    if (!broadcasters[i]) continue;
     if (!broadcasters[i].access_token || broadcasters[i].refresh_count >= 10) {
       const refreshRequest = await TwitchAPI.refreshToken(broadcasters[i].refresh_token);
       if (!refreshRequest) {

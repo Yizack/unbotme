@@ -46,6 +46,10 @@ class CloudflareAPI {
   }
 }
 
+if (!process.env.CLOUDFLARE_ACCOUNT || !process.env.CLOUDFLARE_D1 || !process.env.CLOUDFLARE_AUTHORIZATION) {
+  throw new Error("Missing Cloudflare credentials");
+}
+
 export default new CloudflareAPI({
   account_identifier: process.env.CLOUDFLARE_ACCOUNT,
   database_identifier: process.env.CLOUDFLARE_D1,

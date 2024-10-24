@@ -9,6 +9,10 @@ import type { IncomingMessage, ServerResponse } from "http";
 
 dotenv.config();
 
+if (!process.env.TWITCH_CLIENT_ID || !process.env.TWITCH_SECRET || !process.env.TWITCH_BOT) {
+  throw new Error("Missing Twitch credentials");
+}
+
 export const bot_id = process.env.TWITCH_BOT_ID;
 
 const tokenData = JSON.parse(await fs.readFile(`./tokens.${bot_id}.json`, { encoding: "utf-8" }));
@@ -32,7 +36,7 @@ export const options = {
 };
 
 export const extractCommand = (message: string) => {
-  return message.split(" ")[0].replace("!", "");
+  return message.split(" ")[0]?.replace("!", "");
 };
 
 export function onConnected (address: string, port: number) {

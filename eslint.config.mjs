@@ -1,13 +1,17 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { includeIgnoreFile } from "@eslint/compat";
 import stylistic from "@stylistic/eslint-plugin";
 import parserTs from "@typescript-eslint/parser";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const gitignorePath = path.resolve(__dirname, ".gitignore");
+
 export default [
+  includeIgnoreFile(gitignorePath),
   {
     files: ["**/*.js", "**/*.mjs", "**/*.ts"],
-    ignores: [
-      "node_modules/**/*",
-      "build/**/*"
-    ],
     plugins: {
       "@stylistic": stylistic
     },
@@ -43,7 +47,8 @@ export default [
       "@stylistic/one-component-per-file": "off",
       "@stylistic/require-default-prop": "off",
       "@stylistic/space-in-parens": ["error", "never"],
-      "@stylistic/template-curly-spacing": "error"
+      "@stylistic/template-curly-spacing": "error",
+      "@stylistic/quote-props": ["error", "consistent-as-needed"]
     }
   }
 ];

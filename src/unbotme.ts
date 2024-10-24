@@ -15,7 +15,7 @@ const server = createServer((req, res) => {
     "/api/badbots": () => sendJsonResponse(res, cron.badbots),
     "/": () => res.writeHead(301, { Location: process.env.ORIGIN }) && res.end()
   };
-  const handler = endpoints[req.url] || endpoints["/"];
+  const handler = endpoints[req.url as keyof typeof endpoints] || endpoints["/"];
   handler();
 });
 
@@ -70,7 +70,7 @@ io.on("connection", (socket) => {
     };
 
     const index = broadcasters.findIndex((b) => b.id_user === broadcaster.id_user);
-    if (index >= 0) {
+    if (index >= 0 && broadcasters[index]) {
       broadcasters[index].access_token = broadcaster.access_token;
       broadcasters[index].refresh_token = broadcaster.refresh_token;
       broadcasters[index].refresh_count = broadcaster.refresh_count;
