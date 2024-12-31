@@ -2,28 +2,54 @@ import type { D1User } from "~/types/cloudflare.js";
 import type { Client } from "@twurple/auth-tmi";
 import { consola } from "consola";
 import { colors } from "consola/utils";
-import { promises as fs } from "fs";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import { RefreshingAuthProvider } from "@twurple/auth";
 import * as dotenv from "dotenv";
 import type { IncomingMessage, ServerResponse } from "http";
 
 dotenv.config();
 
-if (!process.env.TWITCH_CLIENT_ID || !process.env.TWITCH_SECRET || !process.env.TWITCH_BOT) {
+const {
+  TWITCH_CLIENT_ID: twitchClientId,
+  TWITCH_SECRET: twitchSecret,
+  TWITCH_BOT: twitchBot,
+  TWITCH_BOT_ID: twitchBotId,
+  TWITCH_ACCESS_TOKEN: twitchAccessToken,
+  TWITCH_REFRESH_TOKEN: twitchRefreshToken
+} = process.env;
+
+if (!twitchClientId || !twitchSecret || !twitchBot) {
   throw new Error("Missing Twitch credentials");
 }
 
-export const bot_id = process.env.TWITCH_BOT_ID;
+if (!twitchAccessToken || !twitchRefreshToken) {
+  throw new Error("Missing Twitch authentication tokens");
+}
 
-const tokenData = JSON.parse(await fs.readFile(`./tokens.${bot_id}.json`, { encoding: "utf-8" }));
+const tokensDir = join(process.cwd(), "tokens");
 
-const authProvider = new RefreshingAuthProvider({
-  clientId: process.env.TWITCH_CLIENT_ID,
-  clientSecret: process.env.TWITCH_SECRET
+await mkdir(tokensDir, { recursive: true }).catch((e) => {
+  console.warn(e);
+  process.exit(1);
 });
 
-authProvider.onRefresh(async (userId, newTokenData) => await fs.writeFile(`./tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), { encoding: "utf-8" }));
-await authProvider.addUserForToken(tokenData, ["chat"]);
+const defaultTokenData = {
+  accessToken: twitchAccessToken,
+  refreshToken: twitchRefreshToken,
+  expiresIn: 0,
+  obtainmentTimestamp: 0
+};
+
+export const bot_id = twitchBotId;
+
+const authProvider = new RefreshingAuthProvider({
+  clientId: twitchClientId,
+  clientSecret: twitchSecret
+});
+
+authProvider.onRefresh(async (userId, newTokenData) => await writeFile(`${tokensDir}/${userId}.json`, JSON.stringify(newTokenData, null, 4), { encoding: "utf-8" }));
+await authProvider.addUserForToken(defaultTokenData, ["chat"]);
 
 export const options = {
   options: { debug: true, messagesLogLevel: "info" },

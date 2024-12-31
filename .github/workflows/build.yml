@@ -62,15 +62,3 @@ jobs:
 
       - name: Build 🏗️
         run: pnpm build
-
-      - name: Add upload Secrets 📂
-        run: |
-          echo "SSH_HOST=${{ secrets.SSH_HOST }}" >> .env
-          echo "SSH_USERNAME=${{ secrets.SSH_USERNAME }}" >> .env
-          echo "SSH_PASSWORD=${{ secrets.SSH_PASSWORD }}" >> .env
-
-      - name: Upload to Server 🚀
-        run: pnpm upload
-
-      - name: Clean Up 🧹
-        run: rm .env

@@ -12,11 +12,7 @@ TWITCH_SECRET="TWITCH_CLIENT_SECRET"
 CLOUDFLARE_AUTHORIZATION="CLOUDFLARE_API_TOKEN"
 CLOUDFLARE_D1="CLOUDFLARE_DATABASE_ID"
 CLOUDFLARE_ACCOUNT="CLOUDFLARE_ACCOUNT_ID"
-SSH_HOST="SERVER_IP"
-SSH_USERNAME="SERVER_USERNAME"
-SSH_PASSWORD="SERVER_PASSWORD"
-GH_TOKEN="GITHUB_PERSONAL_ACCESS_TOKEN"
-PORT="80"
+PORT="PORT"
 ORIGIN="https://YOUR_SOCKET"
 ```
 
@@ -39,15 +35,13 @@ ORIGIN="https://YOUR_SOCKET"
 
 Authenticate to obtain your first time tokens.
 
-Create a json file in your project's root folder named `tokens.<BOT_ID>.json`
+```
+https://id.twitch.tv/oauth2/token?client_id=TWITCH_CLIENT_ID&client_secret=TWITCH_CLIENT_SECRET&grant_type=client_credentials
+```
 
-```json
-{
-  "accessToken": "YOUR_ACCESS_TOKEN",
-  "refreshToken": "YOUR_REFRESH_TOKEN",
-  "expiresIn": 0,
-  "obtainmentTimestamp": 0
-}
+```sh
+TWITCH_ACCESS_TOKEN="TWITCH_ACCESS_TOKEN"
+TWITCH_REFRESH_TOKEN="TWITCH_REFRESH_TOKEN"
 ```
 
 ## Bots list used
