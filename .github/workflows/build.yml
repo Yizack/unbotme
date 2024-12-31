@@ -60,5 +60,16 @@ jobs:
             git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           fi
 
-      - name: Build 🏗️
-        run: pnpm build
+      - name: Apply changes in Server 🚀
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /apps/unbotme
+            git fetch
+            git pull
+            pnpm install
+            pnpm build
+            pnpm pm2:restart

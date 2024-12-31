@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "tsx src/unbotme.ts",
     "start": "node build/unbotme.mjs",
-    "start:pm2": "pm2 start build/unbotme.mjs",
+    "pm2:start": "pm2 start build/unbotme.mjs",
+    "pm2:restart": "pm2 restart unbotme",
     "build": "unbuild",
     "tunnel": "cloudflared tunnel run unbotme",
     "upload": "tsx scripts/uploadToServer.ts",
