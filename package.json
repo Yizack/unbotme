@@ -5,7 +5,7 @@
   "main": "src/unbotme.ts",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/unbotme.ts",
+    "dev": "tsx src/unbotme.ts",
     "start": "node build/unbotme.mjs",
     "start:pm2": "pm2 start node build/unbotme.mjs",
     "build": "unbuild",
@@ -19,25 +19,24 @@
   "author": "Yizack Rangel",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/compat": "^1.2.3",
-    "@stylistic/eslint-plugin": "^2.11.0",
-    "@twurple/auth": "^7.2.0",
-    "@twurple/auth-tmi": "^7.2.0",
-    "@types/node": "^22.10.1",
+    "@eslint/compat": "^1.2.4",
+    "@stylistic/eslint-plugin": "^2.12.1",
+    "@twurple/auth": "^7.2.1",
+    "@twurple/auth-tmi": "^7.2.1",
+    "@types/node": "^22.10.2",
     "@types/ssh2": "^1.15.1",
-    "@typescript-eslint/parser": "^8.16.0",
-    "consola": "^3.2.3",
-    "dotenv": "^16.4.5",
-    "eslint": "^9.15.0",
-    "nodemon": "^3.1.7",
+    "@typescript-eslint/parser": "^8.19.0",
+    "consola": "^3.3.3",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.17.0",
     "ofetch": "^1.4.1",
     "socket.io": "^4.8.1",
     "ssh2": "^1.16.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.19.1",
-    "typescript": "^5.6.3",
-    "unbuild": "^2.0.0"
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "unbuild": "^3.2.0"
   },
-  "packageManager": "pnpm@9.14.2"
+  "packageManager": "pnpm@9.15.2"
 }
