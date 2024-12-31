@@ -72,6 +72,7 @@ jobs:
             git pull
             export NVM_DIR=/usr/local/nvm
             source /usr/local/nvm/nvm.sh
+            export PATH=$PATH:/usr/local/nvm/versions/node/v22/bin
             pnpm install
             pnpm build
-            pnpm pm2:restart
+            sudo su -c "export PATH=$PATH:/usr/local/bin && pm2 restart unbotme"
