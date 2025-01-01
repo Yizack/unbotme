@@ -5,10 +5,9 @@ import { colors } from "consola/utils";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { RefreshingAuthProvider } from "@twurple/auth";
-import * as dotenv from "dotenv";
 import type { IncomingMessage, ServerResponse } from "http";
 
-dotenv.config();
+process.loadEnvFile();
 
 const {
   TWITCH_CLIENT_ID: twitchClientId,
