@@ -8,8 +8,6 @@ while getopts u:p: flag; do
   esac
 done
 
-echo $password | sudo -S su -c "export PATH=$PATH; pm2 restart unbotme"
-
 cd /apps/unbotme
 git fetch
 git pull
@@ -17,4 +15,4 @@ export NVM_DIR=/usr/local/nvm
 source /usr/local/nvm/nvm.sh
 pnpm install
 pnpm build
-sudo su -c "export PATH=$PATH; pm2 restart unbotme"
+echo $password | sudo -S su -c "export PATH=$PATH; pm2 restart unbotme"
