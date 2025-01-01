@@ -67,4 +67,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            /apps/unbotme/service.sh
+            /apps/unbotme/service.sh -p ${{ secrets.SSH_PASSWORD }}
