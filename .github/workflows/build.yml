@@ -75,4 +75,4 @@ jobs:
             pnpm i
             pnpm build
             export PM2_HOME=/usr/local/share/pm2
-            /usr/local/share/pnpm/pm2 restart unbotme
+            /usr/local/share/pnpm/pm2 restart unbotme --silent
