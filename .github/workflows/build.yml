@@ -67,4 +67,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            /apps/unbotme/scripts/service.sh -p '${{ secrets.SSH_PASSWORD }}'
+            cd /apps/unbotme
+            git fetch
+            git pull
+            export NVM_DIR=/usr/local/nvm
+            source /usr/local/nvm/nvm.sh
+            pnpm i
+            pnpm build
+            export PM2_HOME=/usr/local/share/pm2
+            /usr/local/share/pnpm/pm2 restart unbotme
