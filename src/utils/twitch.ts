@@ -6,7 +6,10 @@ class TwitchAPI {
   private client_id: string;
   private client_secret: string;
 
-  constructor ({ client_id, client_secret }: { client_id: string, client_secret: string }) {
+  constructor ({ client_id, client_secret }: { client_id: string | undefined, client_secret: string | undefined }) {
+    if (!client_id || !client_secret) {
+      throw new Error("Missing Twitch credentials");
+    }
     this.client_id = client_id;
     this.client_secret = client_secret;
   }
@@ -38,7 +41,7 @@ class TwitchAPI {
   }
 
   async banUser (broadcaster_id: number, data: { user_id: string, reason: string }): Promise<void> {
-    const access_token = (await options.authProvider.getAccessTokenForUser(bot_id)).accessToken;
+    const access_token = (await options.authProvider.getAccessTokenForUser(bot_id!))?.accessToken;
     await $fetch(`https://api.twitch.tv/helix/moderation/bans?broadcaster_id=${broadcaster_id}&moderator_id=${bot_id}`, {
       method: "POST",
       headers: {

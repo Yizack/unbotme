@@ -2,10 +2,11 @@ import type { D1User } from "~/types/cloudflare.js";
 import type { Client } from "@twurple/auth-tmi";
 import { consola } from "consola";
 import { colors } from "consola/utils";
-import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { RefreshingAuthProvider } from "@twurple/auth";
 import type { IncomingMessage, ServerResponse } from "http";
+import CloudflareAPI from "~/utils/cloudflare";
 
 process.loadEnvFile();
 
@@ -73,6 +74,7 @@ export const joinChannels = async (client: Client, users: D1User[]) => {
     const joined = await client.join(user.user_login).catch(() => false);
     if (!joined) {
       consola.error(`❌ Couldn't join ${user.user_login}`);
+      CloudflareAPI.inactivateUser(user.id_user);
       continue;
     }
     consola.success(colors.yellow(`🚪 Joined ${colors.white(user.user_login)} (${user.id_user})`));
