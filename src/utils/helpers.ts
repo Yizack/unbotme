@@ -7,17 +7,16 @@ import { join } from "node:path";
 import { RefreshingAuthProvider } from "@twurple/auth";
 import type { IncomingMessage, ServerResponse } from "http";
 import CloudflareAPI from "~/utils/cloudflare";
-
-process.loadEnvFile();
+import { useConfig } from "./config";
 
 const {
-  TWITCH_CLIENT_ID: twitchClientId,
-  TWITCH_SECRET: twitchSecret,
-  TWITCH_BOT: twitchBot,
-  TWITCH_BOT_ID: twitchBotId,
-  TWITCH_ACCESS_TOKEN: twitchAccessToken,
-  TWITCH_REFRESH_TOKEN: twitchRefreshToken
-} = process.env;
+  twitchClientId,
+  twitchSecret,
+  twitchBot,
+  twitchBotId,
+  twitchAccessToken,
+  twitchRefreshToken
+} = useConfig();
 
 if (!twitchClientId || !twitchSecret || !twitchBot) {
   throw new Error("Missing Twitch credentials");

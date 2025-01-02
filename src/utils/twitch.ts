@@ -1,6 +1,7 @@
 import { $fetch } from "ofetch";
 import type { Broadcaster, TwitchRefreshResponse, TwitchChattersResponse } from "~/types";
 import { bot_id, options } from "~/utils/helpers";
+import { useConfig } from "./config";
 
 class TwitchAPI {
   private client_id: string;
@@ -53,7 +54,12 @@ class TwitchAPI {
   }
 }
 
+const {
+  twitchClientId,
+  twitchSecret
+} = useConfig();
+
 export default new TwitchAPI({
-  client_id: process.env.TWITCH_CLIENT_ID,
-  client_secret: process.env.TWITCH_SECRET
+  client_id: twitchClientId,
+  client_secret: twitchSecret
 });

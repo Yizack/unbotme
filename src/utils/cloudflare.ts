@@ -1,5 +1,6 @@
 import { $fetch } from "ofetch";
 import type { CloudflareAPIOptions, CloudflareSQLResponse, D1User } from "~/types/cloudflare.js";
+import { useConfig } from "./config";
 
 class CloudflareAPI {
   private readonly base_url: string = "https://api.cloudflare.com/client/v4";
@@ -46,12 +47,18 @@ class CloudflareAPI {
   }
 }
 
-if (!process.env.CLOUDFLARE_ACCOUNT || !process.env.CLOUDFLARE_D1 || !process.env.CLOUDFLARE_AUTHORIZATION) {
+const {
+  cloudflareAccount,
+  cloudflareD1,
+  cloudflareAuthorization
+} = useConfig();
+
+if (!cloudflareAccount || !cloudflareD1 || !cloudflareAuthorization) {
   throw new Error("Missing Cloudflare credentials");
 }
 
 export default new CloudflareAPI({
-  account_identifier: process.env.CLOUDFLARE_ACCOUNT,
-  database_identifier: process.env.CLOUDFLARE_D1,
-  authorization: process.env.CLOUDFLARE_AUTHORIZATION
+  account_identifier: cloudflareAccount,
+  database_identifier: cloudflareD1,
+  authorization: cloudflareAuthorization
 });
