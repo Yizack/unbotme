@@ -7,13 +7,16 @@ import CloudflareAPI from "~/utils/cloudflare";
 import * as cron from "~/crons/banbots";
 // import * as cmd from "~/commands";
 import { consola } from "consola";
+import { useConfig } from "./utils/config";
+
+const { websiteOrigin, websocketPort } = useConfig();
 
 const server = createServer((req, res) => {
   const endpoints = {
     "/api/botslist": () => sendJsonResponse(res, cron.botslist),
     "/api/goodbots": () => sendJsonResponse(res, cron.goodbots),
     "/api/badbots": () => sendJsonResponse(res, cron.badbots),
-    "/": () => res.writeHead(301, { Location: process.env.ORIGIN }) && res.end()
+    "/": () => res.writeHead(301, { Location: websiteOrigin }) && res.end()
   };
   const handler = endpoints[req.url as keyof typeof endpoints] || endpoints["/"];
   handler();
@@ -21,7 +24,7 @@ const server = createServer((req, res) => {
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.ORIGIN
+    origin: websiteOrigin
   }
 });
 
@@ -90,7 +93,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const port = process.env.PORT || 3000;
+const port = websocketPort || 3000;
 server.listen(port, () => {
   consola.success(`Socket open, port ${port}`);
 });

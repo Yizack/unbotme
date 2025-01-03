@@ -9,7 +9,9 @@ const {
   TWITCH_REFRESH_TOKEN,
   CLOUDFLARE_ACCOUNT,
   CLOUDFLARE_D1,
-  CLOUDFLARE_AUTHORIZATION
+  CLOUDFLARE_AUTHORIZATION,
+  WEBSOCKET_PORT,
+  WEBSITE_ORIGIN
 } = process.env;
 
 export const useConfig = () => ({
@@ -21,5 +23,7 @@ export const useConfig = () => ({
   twitchRefreshToken: TWITCH_REFRESH_TOKEN,
   cloudflareAccount: CLOUDFLARE_ACCOUNT,
   cloudflareD1: CLOUDFLARE_D1,
-  cloudflareAuthorization: CLOUDFLARE_AUTHORIZATION
+  cloudflareAuthorization: CLOUDFLARE_AUTHORIZATION,
+  websocketPort: WEBSOCKET_PORT,
+  websiteOrigin: WEBSITE_ORIGIN
 });

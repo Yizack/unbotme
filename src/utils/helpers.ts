@@ -56,7 +56,7 @@ export const options = {
     reconnect: true,
     secure: true
   },
-  channels: ["#" + process.env.TWITCH_BOT],
+  channels: ["#" + twitchBot],
   authProvider
 };
 
