@@ -73,17 +73,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Connect and run command on remote server
-        uses: and-fm/cloudflared-ssh-action@v3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          private_key_filename: ${{ secrets.SSH_PRIVATE_KEY_FILENAME }}
-          private_key_value: ${{ secrets.SSH_PRIVATE_KEY_VALUE }}
-          service_token_id: ${{ secrets.CLOUDFLARED_SERVICE_TOKEN_ID }}
-          service_token_secret: ${{ secrets.CLOUDFLARED_SERVICE_TOKEN_SECRET }}
-          port: 22
-          commands: |
+      - name: Download Cloudflared
+        run: |
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared-linux-amd64
+          sudo mv cloudflared-linux-amd64 /usr/bin/cloudflared
+          sudo chmod +x /usr/bin/cloudflared
+
+      - name: Setup SSH Proxy
+        run: |
+          mkdir ~/.ssh
+          echo "Host ${{ secrets.SSH_HOST }}" | sudo tee -a ~/.ssh/config
+          echo "ProxyCommand cloudflared access ssh --hostname ${{ secrets.SSH_HOST }} --id ${{ secrets.CLOUDFLARED_SERVICE_TOKEN_ID }} --secret ${{ secrets.CLOUDFLARED_SERVICE_TOKEN_SECRET }}" | sudo tee -a ~/.ssh/config
+          echo "${{ secrets.SSH_PRIVATE_KEY_VALUE }}" | sudo tee -a ~/.ssh/${{ secrets.SSH_PRIVATE_KEY_FILENAME }}
+          sudo chmod 600 ~/.ssh/${{ secrets.SSH_PRIVATE_KEY_FILENAME }}
+      
+      - name: Connect to Server
+        run: |
+          ssh-keyscan ${{ secrets.SSH_HOST }} | sudo tee -a ~/.ssh/known_hosts
+          ssh -i ~/.ssh/${{ secrets.SSH_PRIVATE_KEY_FILENAME }} -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }}@${{ secrets.SSH_USERNAME }} << 'EOF'
             cd /apps/unbotme
             git fetch
             git pull
@@ -93,3 +100,4 @@ jobs:
             pnpm build
             export PM2_HOME=/usr/local/share/pm2
             /usr/local/share/pnpm/pm2 restart unbotme --silent
+          EOF
