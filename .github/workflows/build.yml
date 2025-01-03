@@ -11,6 +11,13 @@ on:
     branches:
       - main
 
+env:
+  NODE_OPTIONS: --max-old-space-size=6144
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name != 'push' }}
+
 jobs:
   build:
     name: Build and Upload to Server
