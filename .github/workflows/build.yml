@@ -87,6 +87,7 @@ jobs:
             git pull --rebase
             export NVM_DIR=/usr/local/nvm
             source /usr/local/nvm/nvm.sh
+            corepack enable pnpm
             pnpm i
             pnpm build
             export PM2_HOME=/usr/local/share/pm2

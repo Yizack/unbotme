@@ -9,7 +9,7 @@
     "start": "node build/unbotme.mjs",
     "pm2:start": "pm2 start build/unbotme.mjs",
     "build": "unbuild",
-    "botslist": "tsx scripts/generateBotsList.ts",
+    "botslist": "jiti scripts/generateBotsList.ts",
     "test": "vitest run --reporter=verbose",
     "lint": "eslint --fix"
   },
@@ -17,23 +17,22 @@
   "author": "Yizack Rangel",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/compat": "^1.2.6",
-    "@stylistic/eslint-plugin": "^3.1.0",
+    "@eslint/compat": "^1.2.7",
+    "@stylistic/eslint-plugin": "^4.2.0",
     "@twurple/auth": "^7.2.1",
     "@twurple/auth-tmi": "^7.2.1",
-    "@types/node": "^22.13.2",
+    "@types/node": "^22.13.11",
     "@types/ssh2": "^1.15.4",
-    "@typescript-eslint/parser": "^8.24.0",
-    "consola": "^3.4.0",
-    "eslint": "^9.20.1",
+    "@typescript-eslint/parser": "^8.27.0",
+    "consola": "^3.4.2",
+    "eslint": "^9.23.0",
     "ofetch": "^1.4.1",
     "socket.io": "^4.8.1",
     "ssh2": "^1.16.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3",
-    "unbuild": "^3.3.1"
+    "typescript": "^5.8.2",
+    "unbuild": "^3.5.0"
   },
-  "packageManager": "pnpm@10.3.0"
+  "packageManager": "pnpm@10.6.5"
 }
