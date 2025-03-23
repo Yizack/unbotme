@@ -1,12 +1,12 @@
 import type { Client } from "@twurple/auth-tmi";
+import { consola } from "consola";
+import { colors } from "consola/utils";
 import type { Broadcaster } from "~/types";
 import { options } from "~/utils/helpers";
 import CloudflareAPI from "~/utils/cloudflare";
 import TwitchAPI from "~/utils/twitch";
 import botslist from "~/data/botslist.json" assert { type: "json" };
 import goodbots from "~/data/goodbots.json" assert { type: "json" };
-import { consola } from "consola";
-import { colors } from "consola/utils";
 
 const badbots = botslist.filter((bot) => !goodbots.includes(bot));
 

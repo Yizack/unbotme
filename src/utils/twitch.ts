@@ -1,7 +1,7 @@
 import { $fetch } from "ofetch";
-import type { Broadcaster, TwitchRefreshResponse, TwitchChattersResponse } from "~/types";
-import { bot_id, options } from "~/utils/helpers";
 import { useConfig } from "./config";
+import type { Broadcaster, TwitchChattersResponse, TwitchRefreshResponse } from "~/types";
+import { bot_id, options } from "~/utils/helpers";
 
 class TwitchAPI {
   private client_id: string;

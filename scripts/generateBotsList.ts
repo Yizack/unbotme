@@ -1,7 +1,7 @@
-import { $fetch } from "ofetch";
 import { writeFileSync } from "fs";
-import type { twitchInsightsList } from "../src/types/scripts.js";
+import { $fetch } from "ofetch";
 import { consola } from "consola";
+import type { twitchInsightsList } from "../src/types/scripts.js";
 
 consola.start("Updating bots list");
 

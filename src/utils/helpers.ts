@@ -1,13 +1,13 @@
-import type { D1User } from "~/types/cloudflare.js";
+import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import type { IncomingMessage, ServerResponse } from "http";
 import type { Client } from "@twurple/auth-tmi";
 import { consola } from "consola";
 import { colors } from "consola/utils";
-import { mkdir, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { RefreshingAuthProvider } from "@twurple/auth";
-import type { IncomingMessage, ServerResponse } from "http";
-import CloudflareAPI from "~/utils/cloudflare";
 import { useConfig } from "./config";
+import CloudflareAPI from "~/utils/cloudflare";
+import type { D1User } from "~/types/cloudflare.js";
 
 const {
   twitchClientId,

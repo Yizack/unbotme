@@ -1,6 +1,6 @@
 import { $fetch } from "ofetch";
-import type { CloudflareAPIOptions, CloudflareSQLResponse, D1User } from "~/types/cloudflare.js";
 import { useConfig } from "./config";
+import type { CloudflareAPIOptions, CloudflareSQLResponse, D1User } from "~/types/cloudflare.js";
 
 class CloudflareAPI {
   private readonly base_url: string = "https://api.cloudflare.com/client/v4";

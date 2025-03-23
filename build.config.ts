@@ -1,5 +1,5 @@
-import { defineBuildConfig } from "unbuild";
 import path from "path";
+import { defineBuildConfig } from "unbuild";
 
 export default defineBuildConfig({
   clean: true,

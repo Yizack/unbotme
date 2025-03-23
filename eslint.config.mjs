@@ -1,19 +1,19 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
+import { defineConfig } from "eslint/config";
 import { includeIgnoreFile } from "@eslint/compat";
-import stylistic from "@stylistic/eslint-plugin";
 import parserTs from "@typescript-eslint/parser";
+import stylisticPlugin from "@stylistic/eslint-plugin";
+import importPlugin from "eslint-plugin-import-x";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const gitignorePath = path.resolve(__dirname, ".gitignore");
-
-export default [
-  includeIgnoreFile(gitignorePath),
+export default defineConfig([
+  includeIgnoreFile(resolve(".gitignore")),
   {
     files: ["**/*.js", "**/*.mjs", "**/*.ts"],
     plugins: {
-      "@stylistic": stylistic
+      "@stylistic": stylisticPlugin,
+      "@typescript-eslint": tsPlugin,
+      "import": importPlugin
     },
     languageOptions: {
       parser: parserTs
@@ -21,6 +21,14 @@ export default [
     rules: {
       "camelcase": "off",
       "no-console": ["error", { allow: ["info", "warn"] }],
+      "sort-imports": ["error", { ignoreDeclarationSort: true }],
+      "import/first": "error",
+      "import/no-duplicates": "error",
+      "import/no-mutable-exports": "error",
+      "import/no-named-default": "error",
+      "import/no-self-import": "error",
+      "import/order": "error",
+      "import/newline-after-import": ["error", { count: 1 }],
       "@stylistic/indent": ["error", 2, { SwitchCase: 1 }],
       "@stylistic/linebreak-style": ["error", process.platform === "win32" ? "windows" : "unix"],
       "@stylistic/quotes": ["error", "double"],
@@ -47,8 +55,10 @@ export default [
       "@stylistic/one-component-per-file": "off",
       "@stylistic/require-default-prop": "off",
       "@stylistic/space-in-parens": ["error", "never"],
-      "@stylistic/template-curly-spacing": "error",
-      "@stylistic/quote-props": ["error", "consistent-as-needed"]
+      "@stylistic/no-multiple-empty-lines": ["error", { max: 1 }],
+      "@stylistic/quote-props": ["error", "consistent-as-needed"],
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/consistent-type-imports": "error"
     }
   }
-];
+]);
