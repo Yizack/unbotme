@@ -72,7 +72,7 @@ io.on("connection", (socket) => {
       refresh_count: 0
     };
 
-    const index = broadcasters.findIndex((b) => b.id_user === broadcaster.id_user);
+    const index = broadcasters.findIndex(b => b.id_user === broadcaster.id_user);
     if (index >= 0 && broadcasters[index]) {
       broadcasters[index].access_token = broadcaster.access_token;
       broadcasters[index].refresh_token = broadcaster.refresh_token;
@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("leave", async (user: LeaveResult) => {
-    const index = broadcasters.findIndex((b) => b.id_user === Number(user.id_user));
+    const index = broadcasters.findIndex(b => b.id_user === Number(user.id_user));
     if (index >= 0) {
       broadcasters.splice(index, 1);
       await client.part(user.username);

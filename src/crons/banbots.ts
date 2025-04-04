@@ -8,7 +8,7 @@ import TwitchAPI from "~/utils/twitch";
 import botslist from "~/data/botslist.json" assert { type: "json" };
 import goodbots from "~/data/goodbots.json" assert { type: "json" };
 
-const badbots = botslist.filter((bot) => !goodbots.includes(bot));
+const badbots = botslist.filter(bot => !goodbots.includes(bot));
 
 export { botslist, goodbots, badbots };
 
@@ -22,7 +22,7 @@ async function banBotHandler (client: Client, broadcasters: Broadcaster[]) {
   for (const channel of client.getChannels()) {
     if (channel === options.channels[0]) continue;
     const channel_name = channel.replace("#", "");
-    const i = broadcasters.findIndex((broadcaster) => broadcaster.user_login === channel_name);
+    const i = broadcasters.findIndex(broadcaster => broadcaster.user_login === channel_name);
     if (!broadcasters[i]) continue;
     if (!broadcasters[i].access_token || broadcasters[i].refresh_count >= 10) {
       const refreshRequest = await TwitchAPI.refreshToken(broadcasters[i].refresh_token);

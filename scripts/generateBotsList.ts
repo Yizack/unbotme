@@ -24,5 +24,5 @@ async function getTwitchInsightsBots () {
   // example of response [ 'slocool', 26012, 1565348543 ]
   const response: twitchInsightsList = await $fetch(sources.twitchInsights.url).catch(() => null);
   if (!response) return [];
-  return response.bots.map((bot) => bot[0]);
+  return response.bots.map(bot => bot[0]);
 }
